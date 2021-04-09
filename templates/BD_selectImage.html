@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1> Building Damage Detection</h1><br><br>
+        <form method = "POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type = "submit">Next</button>
+        </form>
+    </body>
+</html>
+{% endblock %}

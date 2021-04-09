@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        * {
+          box-sizing: border-box;
+        }
+        
+        /* Create two equal columns that floats next to each other */
+        .column {
+          float: left;
+          width: 33%;
+          padding: 10px;
+          height: 500px; /* Should be removed. Only for demonstration */
+        }
+        
+        /* Clear floats after the columns */
+        .row:after {
+          content: "";
+          display: table;
+          clear: both;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="column">
+          <h2>{{emp.name1}}</h2>
+          <p>
+            <img src="{{emp.image1.url}}" alt="D:" width="400" height="400">
+          </p>
+        </div>
+        <div class="column">
+          <h2>{{emp.name2}}</h2>
+          <p>
+           <img src="{{emp.image2.url}}" alt="D:" width="400" height="400">
+          </p>
+        </div>
+        <div class="column">
+            <h2>Output image</h2>
+            <p>
+            <img src="{{emp.output_image}}" alt="D:" width="400" height="400">
+            </p>
+            <b>Percentage change</b>: {{emp.percentage_change}} %
+        </div>
+    </div>    
+
+    <br><br><br><br><br><a href="{% url 'home:home' %}">Go Back!!!</a>
+</body>
+</html>
+
+{% endblock %}

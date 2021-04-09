@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html> 
+<html lang="en"> 
+<head>
+    <style>
+        body {
+            background-color: #b7dbec;
+        }
+        div {
+            max-width: 400px;
+            margin: auto;
+            margin-top: 100px;
+        }
+
+        form {font-size: 1.3em; }
+        
+    </style> 
+    <meta charset="UTF-8"> 
+    <title>image upload</title> 
+</head> 
+<body><div>
+    <h1>Change Detection</h1><br><br>
+    <form method = "post" enctype="multipart/form-data"> 
+        {% csrf_token %} 
+        {{ form.as_p }}        
+        <button type="submit">Upload</button> 
+    </form> 
+</body></div>
+</html> 
+{% endblock %}
