@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<hmtl>
+    <head>
+
+    </head>
+    <body>
+        <h1>Images</h1>
+        {% for image in img_list %}
+        <img src = "{% static image %}">
+        {% endfor %}
+    </body>
+</hmtl>
+
+
+
+{% endblock %}

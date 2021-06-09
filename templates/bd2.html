@@ -1,0 +1,275 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<head>
+    <meta charset="UTF-8"> 
+    <title>image upload</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>     
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css">
+
+    <style>
+        .contaier{
+            width: 500px;
+            height: 500px;
+            margin-left: 10px;
+            background-color: white;
+            align-content: center;
+        }
+        .slider_column{
+            align-items: center;
+            display: table;
+            align-items: center; 
+            margin-top: 30px;
+        }
+        .slider_row{
+            height: 100%;
+            width: 50%;
+            margin-left: 120px;
+            margin-top: 10px;
+        }
+        .carousel-control-next,
+        .carousel-control-prev{
+            filter: invert(100%);
+        }
+        .column {
+          float: left;
+          width: 33%;
+          padding: 10px;
+          height: 500px; /* Should be removed. Only for demonstration */
+          display: table;
+        }       
+        /* Clear floats after the columns */
+        .row:after {
+          content: "";
+          display: table;
+          clear: both;
+        }
+        #b_analyze{
+            position: relative;
+            left: 35%;
+            margin-top: 10px;
+        }
+        #nested_output{
+            display: flex;
+            height: 500px;
+            width: 500px;
+        }
+        /* #image-compare{
+            display: flex;
+            height: 600px;
+            width: 600px;
+        } */
+        #juxtapose{
+            display:flex;
+            margin-top: 15px;
+            height: 500px;
+            width: 500px;
+        }
+
+                
+        .div1{
+            background-color: green;            
+        }
+        .div2{
+            background-color: blue;
+        }
+        .div3{
+            background-color: yellow;
+        }
+        .div4{
+            background-color: red;
+        }
+        dl{
+            width: 300px;
+            margin-left: 90px;
+            margin-top: 5px;
+            background: #fff;
+            border: 1px solid #000;
+            padding: 5px 15px;
+            display: none;
+        }
+        dt, dd
+        {
+            font-size: 1.2em;
+            display: inline;
+        }
+
+        h1{
+            margin-left: 220px;;
+        }
+
+        .head_class{
+            margin-left: 150px;
+            margin-bottom: 50px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <script>
+
+        $('.carousel').carousel()
+        list1 = "{{list1_JSON}}";
+        list2 = "{{list2_JSON}}";
+        var src1 = "";
+        var src2 = "";
+        var output_image = ""
+        var output_list1 = JSON.parse("{{output_list1JSON|escapejs}}")
+        var output_list2 = JSON.parse("{{output_list2JSON|escapejs}}")
+        var DJANGO_STATIC_URL = '{{ STATIC_URL }}';
+
+        $(document).ready(function(){           
+            $('#my_carousel').on('slid.bs.carousel', function(){
+                    src1 = $('.active').find('#image1').attr('src');
+                    src2 = $('.active').find('#image2').attr('src');
+                    
+                    $('#juxtapose').empty();
+                    slider = new juxtapose.JXSlider('#juxtapose',
+                    [
+                        {   
+                            src: src1,
+                            label: 'Before',
+                        },
+                        {
+                            src: src2,
+                            label: 'After',
+                        }
+                    ],
+                    {
+                        animate: true,
+                        showLabels: true,
+                        showCredits: true,
+                        startingPosition: "50%",
+                        makeResponsive: true
+                    });       
+                })           
+           
+            $('#b_analyze').click(function(){
+                // $('#my_carousel').on('slid.bs.carousel', function(){
+                //     // src1 = $('.active').find('#image1').attr('src');
+                //     src2 = $('.active').find('#image2').attr('src');
+                // })                   
+                if(src2){
+                    for(var i=0; i<output_list2.length; i++){
+                        // console.log(src2)
+                        // console.log(output_list1[i])
+                        if(src2.search(output_list1[i]) != -1){
+                            output_image = "/static/"+output_list2[i]
+                        }
+                    }
+                } 
+                // var elem = document.createElement("img");
+                // elem.src = output_image
+                // document.getElementById("nested_output").appendChild(elem)
+                // console.log(output_image)
+                // console.log(src2)
+                $('#display_image').attr('src',output_image);
+                $('#display_image').attr('style','display:block;');
+                $('#legends').attr('style','display:block;');
+                // console.log(src1)
+                // $.ajax({
+                //     type: "POST",
+                //     // url : "{% url 'home:getOutput' %}",
+                //     url : "/getOutput/",
+                //     data : {
+                //         img1: src1,
+                //         img2: src2,
+                //     },
+                //     contentType: "application/json",
+                //     dataType : "json",
+                //     success: function(data){
+                //         alert("successfull")
+                //     },
+                //     error: function(response){
+                //         console.log(response);
+                //     }
+                // });
+            // alert(src1+src2);
+            console.log(src1+"-----------"+src2+"---------"+output_image)
+            });
+        });
+
+    </script>
+
+    <div class="row">
+        <div class="column">
+            <h1>Select</h1>
+            <div class = "container">
+                <div id="my_carousel" data-interval="false"  class="carousel slide carousel-fade" data-mdb-ride="carousel">
+                    <ol class="carousel-indicators">                
+                        <li data-target="#my_carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#my_carousel" data-slide-to="1" ></li>
+                        <li data-target="#my_carousel" data-slide-to="2" ></li>
+                        <li data-target="#my_carousel" data-slide-to="3" ></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        {% if img_list %}
+                            {% for image1, image2 in img_list %}
+                                <div class="carousel-item {% if forloop.counter0 == 0 %} active {% endif %} ">
+                                    <div class ="slider_column">
+                                        <div class = "slider_row">
+                                            <img id = "image1" src = "{% static image1 %}" class="image-fluid d-block w-100" alt=":(">
+                                        </div>
+                                        <div class = "slider_row">
+                                            <img id = "image2" src = "{% static image2 %}" class="image-fluid d-block w-100" alt=":(">
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            {{disaster}}
+                        {% endif %}
+                        <a class="carousel-control-prev" href="#my_carousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#my_carousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <h1 class="head_class">Compare</h1>
+            <div id="juxtapose">
+                <!-- <img src="/static/srwf/output/santa-rosa-wildfire_00000046_post_disaster.png" alt="" />
+                <img src="/static/srwf/output/santa-rosa-wildfire_00000044_post_disaster.png" alt="" /> -->
+            </div>
+        </div>
+        <div class="column">
+            <h1 class="head_class">Analysis</h1>
+            <div id ="output">
+                <p id="output_p"></p>
+                <div id="nested_output">
+                    <img id="display_image" src="", style="display:none;">
+                </div>
+                <dl id = "legends">
+                    <dt><span class="div1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></dt>
+                    <dd>No Damage</dd>
+                    
+                    <br><dt><span class="div2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></dt>
+                    <dd>Minor Damage</dd>
+                
+                    <br><dt><span class="div3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></dt>
+                    <dd>Major Damage</dd>
+                    <br><dt><span class="div4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></dt>
+                    <dd>Destroyed</dd>
+                </dl>
+                <button id="b_analyze" type="submit" value="submit">Analyze</button>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

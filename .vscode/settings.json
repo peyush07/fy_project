@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/home/peyush/myproject/venv2/bin/python"
+    "python.pythonPath": "/home/peyush/myproject/venv2/bin/python",
+    "git.ignoreLimitWarning": true
 }

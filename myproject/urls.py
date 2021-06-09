@@ -24,13 +24,15 @@ urlpatterns = [
     # path('', HomePageView.as_view(), name='home'),
     path('admin/', admin.site.urls),
     path('', include('home.urls', namespace = 'home')),
+    # path('', include('BD_detection.urls', namespace = 'bd')),
     # path('', EmployeeImage.as_view(), name='emp_image.html'),
     # path('upload/<int:pk>/', EmpImageDisplay.as_view(), name='emp_image_display'),
-]
+]   
 
 
 from django.conf import settings
 from django.conf.urls.static import static
 
 if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

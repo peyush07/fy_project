@@ -6,6 +6,13 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from .BD_model import run_model
 from .draw_polygons import draw_pol
+from .save_to_static import save_to_static
+
+# class BD_pageView(TemplateView):
+#     template_name = 'BD_page.html'
+
+# class BD_fixedView(TemplateView):
+#     template_name = 'BD_fixed.html'
 
 # Create your views here.
 class BD_SelectImageView(TemplateView):
@@ -16,13 +23,12 @@ class BD_SelectImageView(TemplateView):
             obj = form.save()
             path1 = obj.pre_image.path
             path2 = obj.post_image.path
-            x = run_model(path1, path2)
-            if(x):
-                draw_pol(path2)
+            run_model(path1, path2)
 
-        # obj.percentage_change = (path1, path2)                            
-            obj.output_image = "http://127.0.0.1/output/output_polygons.png"
-                
+            img3 = draw_pol(path2)
+            
+            save_to_static(path1, path2, img3)      
+            obj.output_image = "http://127.0.0.1/output/output_polygons.png"                
             obj.save()
             return HttpResponseRedirect(reverse_lazy('home:BD_output_display', kwargs={'pk': obj.id}))
         context = self.get_context_data(form=form)

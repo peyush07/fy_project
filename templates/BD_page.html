@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h1>Building Damage Detection</h1>
+        <a href = "{% url 'home:BD_selectImage' %}">Analyse your images</a> |
+        <a href = "{% url 'home:BD_fixed.html' %}">Analyse images from database</a>
+    </body>
+</html>
+{% endblock %}

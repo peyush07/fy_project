@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1> Building Damage Detection</h1><br><br>
+        <form action ="{% url 'home:bd2.html' %}">
+            <label>Select a disaster : </label>
+            <select name="disasters" id="disasters">
+                <option value="gvol">Guatemala volcano</option>
+                <option value="srwf">Santa Rosa Wildfire</option>
+                <option value="ptsu">Palu Tsunami</option>
+                <option value="harvey">Hurricane Harvey</option>
+            </select>
+            <br><br>
+            <button type = "submit">Next</button>
+        </form>
+    </body>
+</html>
+{% endblock %}

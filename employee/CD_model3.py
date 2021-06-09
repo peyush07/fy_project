@@ -132,15 +132,15 @@ def run_model3(imagepath1, imagepath2):
     #cv2.imwrite(out_dir+'OpenMap.jpg', OpenMap)
 
     print('[INFO] End Change Detection')
-    # img = cv2.imread("/var/www/html/output/Cleanchangemap.png", change_map) 
+    img = cv2.imread("/var/www/html/output/Cleanchangemap.png") 
 
-    # # counting the number of pixels 
-    # number_of_white_pix = np.sum(img == 255) 
-    # number_of_black_pix = np.sum(img == 0) 
+    # # # counting the number of pixels 
+    number_of_white_pix = np.sum(img == 255) 
+    number_of_black_pix = np.sum(img == 0) 
 
     # # print('Number of white pixels :', number_of_white_pix) 
     # # print('Number of black pixels :', number_of_black_pix)
     # # percentage = (number_of_white_pix * 100) / (number_of_white_pix + number_of_black_pix)
     # # print('Percentage change : ', percentage,'%')
-    # percentage = (number_of_white_pix * 100) / (number_of_white_pix + number_of_black_pix)
-    # return percentage
+    percentage = (number_of_white_pix * 100) / (number_of_white_pix + number_of_black_pix)
+    return percentage

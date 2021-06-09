@@ -9,7 +9,15 @@ class EmployeeForm(forms.ModelForm):
         #em = Employee.objects.filter(id=1)[0]
         fields = ['name1', 'image1','name2', 'image2', 'output_image', 'select_model', 'percentage_change']
         #find_PCAKmeans(em.emp_image1.path, em.emp_image2.path)
-        widgets = {'output_image': forms.HiddenInput(),'percentage_change': forms.HiddenInput()}
+        widgets = {
+            'name1': forms.TextInput(attrs={'class': 'form-control'}),
+            'image1': forms.FileInput(attrs={'class': 'form-control'}),
+            'name2': forms.TextInput(attrs={'class': 'form-control'}),
+            'image2': forms.FileInput(attrs={'class': 'form-control'}),
+            'select_model': forms.Select(attrs={'class': 'form-control'}),
+            'output_image': forms.HiddenInput(),
+            'percentage_change': forms.HiddenInput()
+        }
 
 
 # class CDForm(forms.ModelForm): 

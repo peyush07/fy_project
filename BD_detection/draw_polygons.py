@@ -6,11 +6,12 @@ from PIL import Image, ImageDraw
 from PIL import ImagePath
 import imageio as im
 
+
 def draw_pol(imagepath2):
-    # f = open('/tmp/inference/inference.json')
-    x = bool("santa_rosa_wildfire" in imagepath2):
-    if(x)
-        f = open('/home/peyush/fy_project/xView2/output/inference/inference_srwf_44.json')
+    f = open('/tmp/inference/inference.json')
+    # x = bool("santa_rosa_wildfire" in imagepath2)
+    # if(x)
+    # f = open('/home/peyush/fy_project/xView2/output/inference/inference_gv_23.json')
     data = json.load(f)
     
     
@@ -66,6 +67,7 @@ def draw_pol(imagepath2):
         draw = ImageDraw.Draw(img2)
         draw.polygon(coordinates[i], fill=color)
         img3 = Image.blend(img, img2, 0.5)
-        
+    
     #img3.show()
     im.imwrite("/var/www/html/output/output_polygons.png", img3)
+    return img3

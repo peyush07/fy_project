@@ -19,14 +19,12 @@ class EmployeeImage(TemplateView):
             path2 = obj.image2.path
 
             if(obj.select_model == "PcaKmeans"):
-                # obj.percentage_change = 
-                run_model3(path1, path2)                        
+                obj.percentage_change = run_model3(path1, path2)                        
                 obj.output_image = "http://127.0.0.1/output/Cleanchangemap.png"
                 
 
             if(obj.select_model == "vgg19"):
-                # obj.percentage_change =
-                find_change(path1, path2)                            
+                obj.percentage_change = find_change(path1, path2)                            
                 obj.output_image = "http://127.0.0.1/output/changemap2.png"
                 
             obj.save()
